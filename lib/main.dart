@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vima_app/authentication.dart';
+import 'package:vima_app/my_home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -91,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Padding(
               padding: const EdgeInsets.only(top: 60),
               child: OutlinedButton(onPressed: () {
-                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>const Authentication()));
+                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>const Homepage()));
               },style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
                   side: const BorderSide(
@@ -104,7 +105,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 textStyle: const TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
               ), child: const Text("Get Started")),
             ),
-          )
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: TextButton(onPressed: () {
+                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>const Authentication()));
+              },style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
+                foregroundColor: const Color(0xff3287C2),
+                textStyle: const TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
+              ), child: const Text("Sign In")),
+            ),
+          ),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

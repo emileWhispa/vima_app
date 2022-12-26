@@ -18,7 +18,7 @@ class _AuthenticationState extends State<Authentication> {
           const Text("Login in to favorite an ad",textAlign: TextAlign.center,style: TextStyle(fontSize: 23,fontWeight: FontWeight.w600),),
           Padding(
             padding: const EdgeInsets.only(top: 60),
-            child: OutlinedButton.icon(icon: Image.asset("assets/facebook.png"),onPressed: () {
+            child: OutlinedButton.icon(icon: Image.asset("assets/facebook.png",height: 20),onPressed: () {
 
             },style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 12),
@@ -34,7 +34,7 @@ class _AuthenticationState extends State<Authentication> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: OutlinedButton.icon(icon: Image.asset("assets/google.png"),onPressed: () {
+            child: OutlinedButton.icon(icon: Image.asset("assets/google.png",height: 20),onPressed: () {
 
             },style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 12),
@@ -50,7 +50,7 @@ class _AuthenticationState extends State<Authentication> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: OutlinedButton.icon(icon: Image.asset("assets/apple.png"),onPressed: () {
+            child: OutlinedButton.icon(icon: Image.asset("assets/apple.png",fit: BoxFit.fitHeight,height: 20),onPressed: () {
 
             },style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 12),
@@ -66,7 +66,7 @@ class _AuthenticationState extends State<Authentication> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: OutlinedButton.icon(icon: Image.asset("assets/email.png"),onPressed: () {
+            child: OutlinedButton.icon(icon: Image.asset("assets/email.png",height: 20,),onPressed: () {
 
             },style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 12),
