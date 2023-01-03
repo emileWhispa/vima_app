@@ -26,8 +26,10 @@ class HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
+        index: _index,
         children: const [
           HomeScreen(),
+          Center(),
           Center(),
           Center(),
           Center(),

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>435809337722-fteteko71c708knp3a0cbtusdpq8qp4a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.435809337722-fteteko71c708knp3a0cbtusdpq8qp4a</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAyURVlnhOqRuMwDP1_Qwb0UiR8XWc1pvo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>435809337722</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.vimaApp</string>
+	<key>PROJECT_ID</key>
+	<string>vima-99d33</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vima-99d33.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:435809337722:ios:9a41a44451cbb5c4bc56c3</string>
+</dict>
+</plist>

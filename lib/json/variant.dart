@@ -5,6 +5,8 @@ import 'sub_category.dart';
 class Variant {
   int id;
   String name;
+  bool property;
+  bool keyValue;
   List<VariantValue> list = [];
 
 
@@ -14,6 +16,8 @@ class Variant {
   Variant.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
+        keyValue = json['keyValue'],
+        property = json['property'],
   list = skuList(json['valueList']);
 
   static List<VariantValue> skuList(Iterable? iterable){

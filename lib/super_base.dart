@@ -50,14 +50,12 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
 @optionalTypeArgs
 abstract class Superbase<T extends StatefulWidget> extends State<T> {
-  String get bigBase => "https://e-gura.rw/zion/";
+  String get bigBase => "https://api.vima.rw/zion/";
 
   String token =
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjcGFpLnRlY2giLCJleHAiOjE2MDEyMTIzODF9.Lw8Acj_ldP4AakcucN3zKM7I1kTEqKTQc70VdfTga827oz1afKP9Gv54veYBVE0a4PEwN7jPt0xqefV_VsIMyg";
 
   String get server => bigBase;
-
-//  String server = "https://licensing.rura.rw/api/v1/";
 
   String userKey = "user-key-val";
 
@@ -97,10 +95,10 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
     return Future.value();
   }
 
-  String fmtDate(DateTime? _date) {
-    if (_date == null) return "";
+  String fmtDate(DateTime? date) {
+    if (date == null) return "";
 
-    return DateFormat("yyyy-MM-dd HH:mm:ss").format(_date);
+    return DateFormat("yyyy-MM-dd HH:mm:ss").format(date);
   }
 
   Future<void> officialSignOut() async {
@@ -154,10 +152,10 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
     }
   }
 
-  String fmtDate2(DateTime? _date) {
-    if (_date == null) return "";
+  String fmtDate2(DateTime? date) {
+    if (date == null) return "";
 
-    return DateFormat("yyyy-MM-dd").format(_date);
+    return DateFormat("yyyy-MM-dd").format(date);
   }
 
   String googleAPIKey = "AIzaSyAgU_8Z_hG2iWAL6K9QDdqdmes_YjFSK3s";
