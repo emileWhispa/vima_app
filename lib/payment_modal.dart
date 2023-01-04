@@ -175,98 +175,52 @@ class _PaymentModalState extends Superbase<PaymentModal> {
               ],
             ),
           ),
-          Card(
-            color:
-                _mode == "k_pay" ? Theme.of(context).secondaryHeaderColor : null,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _mode = "k_pay";
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage("assets/mastercard.png"),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "Visa and Mastercard",
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            const Text("Pay"),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Radio(
-                      onChanged: (String? v) {
-                        setState(() {
-                          _mode = v!;
-                        });
-                      },
-                      value: "k_pay",
-                      groupValue: _mode,
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Card(
-            color: _mode == "equity"
-                ? Theme.of(context).secondaryHeaderColor
-                : null,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _mode = "equity";
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage("assets/mastercard.png"),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "Pay in Installments",
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            const Text("Mastercard & Visa"),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Radio(
-                        onChanged: (String? v) {
-                          setState(() {
-                            _mode = v!;
-                          });
-                        },
-                        value: "equity",
-                        groupValue: _mode,
-                        activeColor: Theme.of(context).colorScheme.secondary)
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Card(
+          //   color:
+          //       _mode == "k_pay" ? Theme.of(context).secondaryHeaderColor : null,
+          //   child: InkWell(
+          //     onTap: () {
+          //       setState(() {
+          //         _mode = "k_pay";
+          //       });
+          //     },
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Row(
+          //         children: [
+          //           const CircleAvatar(
+          //             backgroundImage: AssetImage("assets/mastercard.png"),
+          //           ),
+          //           Expanded(
+          //             child: Padding(
+          //               padding: const EdgeInsets.all(8.0),
+          //               child: Column(
+          //                 crossAxisAlignment: CrossAxisAlignment.stretch,
+          //                 children: [
+          //                   Text(
+          //                     "Visa and Mastercard",
+          //                     style: Theme.of(context).textTheme.headline6,
+          //                   ),
+          //                   const Text("Pay"),
+          //                 ],
+          //               ),
+          //             ),
+          //           ),
+          //           Radio(
+          //             onChanged: (String? v) {
+          //               setState(() {
+          //                 _mode = v!;
+          //               });
+          //             },
+          //             value: "k_pay",
+          //             groupValue: _mode,
+          //             activeColor: Theme.of(context).colorScheme.secondary,
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Card(
             color: _mode == "momo"
                 ? Theme.of(context).secondaryHeaderColor

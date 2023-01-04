@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:vima_app/cart_screen.dart';
 import 'address_detail_screen.dart';
 import 'order_history_screen.dart';
 import 'super_base.dart';
@@ -30,9 +31,9 @@ class _UserDetailsState extends Superbase<UserDetails> {
             Expanded(child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,crossAxisAlignment: CrossAxisAlignment.start,children: [
-                Text(widget.user.username ?? "---",style: Theme.of(context).textTheme.headline6,),
+                Text(widget.user.username ?? "---",style: Theme.of(context).textTheme.titleLarge,),
                 const SizedBox(height: 2,),
-                Text(widget.user.email ?? "---",style: Theme.of(context).textTheme.subtitle1,),
+                Text(widget.user.email ?? "---",style: Theme.of(context).textTheme.titleMedium,),
               ],),
             )),
             // SizedBox(
@@ -52,7 +53,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 25),
-          child: Text("My Orders",style: Theme.of(context).textTheme.headline4,),
+          child: Text("My Orders",style: Theme.of(context).textTheme.headlineMedium,),
         ),
         Card(
           margin: const EdgeInsets.only(bottom: 35,top: 10),
@@ -137,7 +138,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.location_pin,color: Colors.red.shade700,),
+                        Icon(Icons.location_pin,color: Colors.blue.shade700,),
                         Expanded(child: Container(decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
@@ -146,7 +147,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                             )
                         ),margin: const EdgeInsets.only(left: 12),padding: const EdgeInsets.symmetric(
                             vertical: 12
-                        ),child: Text("Shipping Address",style: Theme.of(context).textTheme.subtitle1,)))
+                        ),child: Text("Shipping Address",style: Theme.of(context).textTheme.titleMedium,)))
                       ],
                     ),
                   ),
@@ -159,7 +160,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.list,color: Colors.red.shade700,),
+                        Icon(Icons.list,color: Colors.blue.shade700,),
                         Expanded(child: Container(decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
@@ -168,7 +169,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                             )
                         ),margin: const EdgeInsets.only(left: 12),padding: const EdgeInsets.symmetric(
                             vertical: 12
-                        ),child: Text("Order History",style: Theme.of(context).textTheme.subtitle1,)))
+                        ),child: Text("Order History",style: Theme.of(context).textTheme.titleMedium,)))
                       ],
                     ),
                   ),
@@ -184,7 +185,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.security,color: Colors.red.shade700,),
+                        Icon(Icons.security,color: Colors.blue.shade700,),
                         Expanded(child: Container(decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
@@ -193,7 +194,23 @@ class _UserDetailsState extends Superbase<UserDetails> {
                             )
                         ),margin: const EdgeInsets.only(left: 12),padding: const EdgeInsets.symmetric(
                             vertical: 12
-                        ),child: Text("Privacy & Policy",style: Theme.of(context).textTheme.subtitle1,)))
+                        ),child: Text("Privacy & Policy",style: Theme.of(context).textTheme.titleMedium,)))
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: InkWell(
+                    onTap: ()async{
+                      push(const CartScreen());
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.shopping_cart,color: Colors.blue.shade700,),
+                        Expanded(child: Container(margin: const EdgeInsets.only(left: 12),padding: const EdgeInsets.symmetric(
+                            vertical: 12
+                        ),child: Text("Shopping Cart",style: Theme.of(context).textTheme.titleMedium,)))
                       ],
                     ),
                   ),
@@ -215,7 +232,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                             )
                         ),margin: const EdgeInsets.only(left: 12),padding: const EdgeInsets.symmetric(
                             vertical: 12
-                        ),child: Text("Change Password",style: Theme.of(context).textTheme.subtitle1,)))
+                        ),child: Text("Change Password",style: Theme.of(context).textTheme.titleMedium,)))
                       ],
                     ),
                   ),

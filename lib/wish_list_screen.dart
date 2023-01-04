@@ -1,3 +1,5 @@
+import 'package:vima_app/authentication.dart';
+
 import 'json/product.dart';
 import 'product_item.dart';
 import 'super_base.dart';
@@ -35,7 +37,7 @@ class _WishListScreenState extends Superbase<WishListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loggedOut ? const Authentication() : Scaffold(
       appBar: AppBar(
         title: const Text("Wish List"),
       ),

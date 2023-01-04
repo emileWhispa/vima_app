@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vima_app/authentication.dart';
 import 'package:vima_app/my_home_page.dart';
+import 'package:vima_app/super_base.dart';
+
+import 'json/user.dart';
+import 'navigation_helper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,7 +64,27 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends Superbase<MyHomePage> {
+
+  bool loading = true;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var string = (await prefs).getString("user");
+      if(string != null){
+        Superbase.tokenValue = (await prefs).getString("token");
+          User.user = User.fromJson(jsonDecode(string));
+          push(Homepage(key: NavigationHelper.key,),replaceAll: true);
+      }else{
+        setState(() {
+          loading = false;
+        });
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -68,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: ListView(
+      body: loading ? const Center(child: CircularProgressIndicator(),) : ListView(
         padding: const EdgeInsets.all(30),
         children: [
           Padding(
@@ -100,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Padding(
               padding: const EdgeInsets.only(top: 60),
               child: OutlinedButton(onPressed: () {
-                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>const Homepage()));
+                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>Homepage(key: NavigationHelper.key,)));
               },style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
                   side: const BorderSide(

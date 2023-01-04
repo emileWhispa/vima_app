@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:vima_app/email_authentication.dart';
 import 'package:vima_app/super_base.dart';
 import 'package:firebase_auth/firebase_auth.dart' as v1;
 
@@ -18,42 +19,6 @@ class Authentication extends StatefulWidget{
 
 class _AuthenticationState extends Superbase<Authentication> {
 
-
-  Future<void> validateAndLogin(String email,String password) async {
-      setState(() {
-        processing = true;
-      });
-      try{
-        await Firebase.initializeApp();
-        var credential = await v1.FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-
-        await officialAuth(credential);
-      }on v1.FirebaseAuthException catch (e) {
-        showSnack(e.message??"User not found");
-      }
-
-      setState(() {
-        processing = false;
-      });
-  }
-
-
-  Future<void> validateAndRegister(String email,String password) async {
-      setState(() {
-        processing = true;
-      });
-      await Firebase.initializeApp();
-      try{
-        var credential = await v1.FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        await officialAuth(credential);
-      }on v1.FirebaseAuthException catch (e) {
-        showSnack(e.message ?? "User can't be created");
-      }
-
-      setState(() {
-        processing = false;
-      });
-  }
 
   int index = 0;
   bool processing = false;
@@ -80,12 +45,22 @@ class _AuthenticationState extends Superbase<Authentication> {
     return await v1.FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  void goToEmailAuth({int index = 0 }) async {
+    var cred = await push<v1.UserCredential>(EmailAuthentication(index: index,));
+    if(cred != null){
+      officialAuth(cred);
+    }
+  }
 
   Future<void> officialAuth(v1.UserCredential? credential,{Map<String, dynamic>? map})async {
 
     if(credential == null || credential.user == null){
       return Future.value();
     }
+
+    setState(() {
+      processing = true;
+    });
 
     var token = await credential.user?.getIdToken();
 
@@ -172,9 +147,7 @@ class _AuthenticationState extends Superbase<Authentication> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: OutlinedButton.icon(icon: Image.asset("assets/email.png",height: 20,),onPressed: () {
-
-            },style: OutlinedButton.styleFrom(
+            child: OutlinedButton.icon(icon: Image.asset("assets/email.png",height: 20,),onPressed: goToEmailAuth,style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 12),
               side: const BorderSide(
                   color: Color(0xff3287C2)
@@ -186,9 +159,12 @@ class _AuthenticationState extends Superbase<Authentication> {
               textStyle: const TextStyle(fontSize: 17)
             ), label: const Text("Continue with Email")),
           ),
+          Navigator.canPop(context) ? TextButton(onPressed: (){
+            goBack();
+          }, child: const Text("Cancel")) : const SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextButton(onPressed: (){}, child: const Text("Don’t have an account? Create one")),
+            child: TextButton(onPressed: ()=>goToEmailAuth(index: 1), child: const Text("Don’t have an account? Create one")),
           ),
           
           const Text("By signing up I agree to the Terms and conditions and privacy policy",textAlign: TextAlign.center,)

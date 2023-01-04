@@ -61,7 +61,7 @@ class _AddCartScreenState extends Superbase<AddCartScreen> {
   void addToCart()async{
 
     if(User.user == null){
-      await push(const Authentication(fromAdd: true));
+      await push( Authentication(fromAdd: true,loginSuccessCallback: goBack,));
 
       if(User.user == null){
         showSnack("Login first");
