@@ -26,6 +26,14 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          elevation: 2.0,
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(color: Colors.black87),
+          iconTheme: IconThemeData(
+            color: Colors.black87
+          )
+        )
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

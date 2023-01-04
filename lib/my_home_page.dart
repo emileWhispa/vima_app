@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vima_app/account_screen.dart';
 import 'package:vima_app/home_screen.dart';
 import 'package:vima_app/json/user.dart';
+import 'package:vima_app/place_ad_screen.dart';
 
 class Homepage extends StatefulWidget{
   const Homepage({super.key});
@@ -30,9 +32,9 @@ class HomepageState extends State<Homepage> {
         children: const [
           HomeScreen(),
           Center(),
+          PlaceAdScreen(),
           Center(),
-          Center(),
-          Center(),
+          AccountScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -84,9 +84,10 @@ class _ProductDetailsState extends Superbase<ProductDetails>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 1.5,
-        backgroundColor: appGrey,
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
         actions: [
           IconButton(onPressed: (){
             Share.share(url("public/products/details/${widget.product.id}"));
@@ -95,7 +96,7 @@ class _ProductDetailsState extends Superbase<ProductDetails>{
         //   PopupMenuButton(itemBuilder: (context)=>[])
         ],
       ),
-      body: StaggeredGridView.countBuilder(crossAxisCount: 2,itemCount: _related.length+1, itemBuilder: (context,index){
+      body: StaggeredGridView.countBuilder(padding: EdgeInsets.zero,crossAxisCount: 2,itemCount: _related.length+1, itemBuilder: (context,index){
         index = index - 1;
 
         if(index<0){

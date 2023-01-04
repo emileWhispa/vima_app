@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:vima_app/category_screen.dart';
 import 'package:vima_app/json/category.dart';
 import 'package:vima_app/json/product.dart';
 import 'package:vima_app/product_details.dart';
+import 'package:vima_app/search_delegate.dart';
+import 'package:vima_app/search_screen.dart';
+import 'package:vima_app/sub_category_screen.dart';
 import 'package:vima_app/super_base.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,11 +17,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends Superbase<HomeScreen> {
+  var focusNode = FocusNode();
   @override
   void initState() {
     WidgetsBinding.instance
         .addPostFrameCallback((timeStamp){
       loadData();
+    });
+    focusNode.addListener(() {
+      if(focusNode.hasFocus){
+        focusNode.unfocus();
+        showSearch(context: context, delegate: SearchDemoSearchDelegate((query){
+          return SearchScreen(query: query);
+        }));
+      }
     });
     super.initState();
   }
@@ -70,6 +83,7 @@ class _HomeScreenState extends Superbase<HomeScreen> {
               children: [
                 Expanded(
                     child: TextFormField(
+                      focusNode: focusNode,
                   decoration: InputDecoration(
                       hintText: "What are you looking for ?",
                       filled: true,
@@ -88,7 +102,9 @@ class _HomeScreenState extends Superbase<HomeScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                  onPressed: () {}, child: const Text("View All Categories")),
+                  onPressed: () {
+                    push(const CategoryScreen());
+                  }, child: const Text("View All Categories")),
             ),
             GridView(
               padding: EdgeInsets.zero,
@@ -103,7 +119,11 @@ class _HomeScreenState extends Superbase<HomeScreen> {
                 margin: EdgeInsets.zero,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            push(Scaffold(appBar: AppBar(
+                              title: Text(e.name),
+                            ),body: SubCategoryScreen(category: e)));
+                          },
                           child: Column(
                             children: [
                               Expanded(
