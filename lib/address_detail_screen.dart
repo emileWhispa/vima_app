@@ -191,7 +191,7 @@ class _AddressDetailScreenState extends Superbase<AddressDetailScreen> {
                   });
                 },
                 child: Text("Complete",style: TextStyle(
-                  color: Theme.of(context).primaryTextTheme.headline6?.color
+                  color: Theme.of(context).primaryTextTheme.titleLarge?.color
                 ),))
                 : IconButton(
                 onPressed: () {
@@ -360,11 +360,11 @@ class _AddressDetailScreenState extends Superbase<AddressDetailScreen> {
                   child: CupertinoButton(
                       borderRadius: BorderRadius.circular(4),
                       padding: EdgeInsets.zero,
+                      onPressed: _newAddress,color: Theme.of(context).primaryColor,
                       child: const Text(
                         "Add A New Address",
                         style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w800),
-                      ),
-                      onPressed: _newAddress,color: Theme.of(context).primaryColor,),
+                      ),),
                 ),
               ),
             ],

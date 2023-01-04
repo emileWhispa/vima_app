@@ -65,7 +65,7 @@ class _OrderHistoryScreenState extends Superbase<OrderHistoryScreen> {
                 padding: const EdgeInsets.all(50.0).copyWith(left: 100),
                 child: Image.asset("assets/empty.png"),
               ),
-              Text("No Orders found !",style: Theme.of(context).textTheme.headline6,textAlign: TextAlign.center,)
+              Text("No Orders found !",style: Theme.of(context).textTheme.titleLarge,textAlign: TextAlign.center,)
             ],
           ),
         ) : ListView.builder(itemCount: _list.length,itemBuilder: (context,index){
@@ -111,7 +111,7 @@ class _OrderHistoryScreenState extends Superbase<OrderHistoryScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("RWF ${fmtNbr(item.total)}",style: Theme.of(context).textTheme.subtitle2,),
+                        child: Text("RWF ${fmtNbr(item.total)}",style: Theme.of(context).textTheme.titleSmall,),
                       ),
                       const SizedBox(width: 10),
                       item.status == "Pending" ?ElevatedButton(onPressed: () async {

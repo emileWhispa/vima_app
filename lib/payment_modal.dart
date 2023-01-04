@@ -127,7 +127,7 @@ class _PaymentModalState extends Superbase<PaymentModal> {
          Padding(
           padding: const EdgeInsets.all(8.0),
           child:
-          Text("Waiting for momo payment confirmation !",style: Theme.of(context).textTheme.headline6,),
+          Text("Waiting for momo payment confirmation !",style: Theme.of(context).textTheme.titleLarge,),
         ),
         const CircularProgressIndicator(),
       ],
@@ -135,13 +135,13 @@ class _PaymentModalState extends Superbase<PaymentModal> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.check_circle,color: Colors.green,size: 80,),
-        Text("Payment success",style: Theme.of(context).textTheme.headline6,)
+        Text("Payment success",style: Theme.of(context).textTheme.titleLarge,)
       ],
     )  : _failed ? Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.check_circle,color: Colors.red,size: 80,),
-        Text("Payment failed",style: Theme.of(context).textTheme.headline6,)
+        Text("Payment failed",style: Theme.of(context).textTheme.titleLarge,)
       ],
     ) : SingleChildScrollView(
       child: Column(
@@ -163,7 +163,7 @@ class _PaymentModalState extends Superbase<PaymentModal> {
                     Text(
                       "RWF ${fmtNbr(widget.order.total)}",
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.headline4!.color),
+                          color: Theme.of(context).textTheme.headlineMedium!.color),
                     ),
                   ],
                 )),
@@ -246,7 +246,7 @@ class _PaymentModalState extends Superbase<PaymentModal> {
                           children: [
                             Text(
                               "Mobile money",
-                              style: Theme.of(context).textTheme.headline6,
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const Text("Momo payments"),
                           ],
