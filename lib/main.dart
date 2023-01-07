@@ -32,10 +32,15 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        tabBarTheme: const TabBarTheme(
+          unselectedLabelColor: Colors.black87,
+          labelColor: Colors.black87
+        ),
         appBarTheme: const AppBarTheme(
           elevation: 2.0,
           backgroundColor: Colors.white,
           titleTextStyle: TextStyle(color: Colors.black87),
+          toolbarTextStyle: TextStyle(color: Colors.black87),
           iconTheme: IconThemeData(
             color: Colors.black87
           )
