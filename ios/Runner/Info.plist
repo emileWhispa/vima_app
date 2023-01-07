@@ -22,6 +22,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open with intention to share it to a specific person.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This app do not use this permission but sdk reference on it and proposed by app store connect to add it into info.plist</string>
 	<!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
     <!-- Google Sign-in Section -->
     <key>CFBundleURLTypes</key>
