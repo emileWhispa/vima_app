@@ -9,6 +9,8 @@ class Product {
   int sold;
   double price;
   double discount;
+  String? location;
+  String? locationId;
 
   List<Gallery> images = [];
 
@@ -20,6 +22,8 @@ class Product {
         name = map['name'],
         sold = map['sold'] ?? 0,
         quantity = map['quantity'],
+        location = map['location'],
+        locationId = map['locationId'],
         description = map['description'],
         discount = (map['discountPrice'] as num).toDouble(),
         images = (map['galleryList'] as Iterable).map((e) => Gallery.fromJson(e)).toList(),

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:vima_app/authentication.dart';
 import 'package:vima_app/json/product.dart';
 import 'package:vima_app/json/user.dart';
+import 'package:vima_app/map_widget.dart';
 import 'package:vima_app/product_item.dart';
 import 'package:vima_app/super_base.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,7 @@ class ProductDetails extends StatefulWidget{
 }
 
 class _ProductDetailsState extends Superbase<ProductDetails>{
+
 
   List<VariantPrice>? prices;
   List<Variant>? variants;
@@ -146,18 +150,22 @@ class _ProductDetailsState extends Superbase<ProductDetails>{
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Text("RWF ${fmtNbr(widget.product.discount)}",style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold
-                    ),),
+                    Expanded(
+                      child: Text("RWF ${fmtNbr(widget.product.discount)}",style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold
+                      ),),
+                    ),
                     widget.product.hasDiscount ? Expanded(
                       child: Row(
                         children: [
                           const SizedBox(width: 10),
-                          Text("RWF ${fmtNbr(widget.product.price)}",style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 15,
-                              color: Colors.grey.shade400,
-                              decoration: TextDecoration.lineThrough
-                          ),),
+                          Expanded(
+                            child: Text("RWF ${fmtNbr(widget.product.price)}",style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                fontSize: 15,
+                                color: Colors.grey.shade400,
+                                decoration: TextDecoration.lineThrough
+                            ),),
+                          ),
                           const SizedBox(width: 5),
                           Text("-${widget.product.percentDiscountStr}%",style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontSize: 12,
@@ -188,6 +196,7 @@ class _ProductDetailsState extends Superbase<ProductDetails>{
                 padding: const EdgeInsets.all(8.0),
                 child: Text(widget.product.description??""),
               ),
+              widget.product.locationId != null ? MapWidget(locationId: widget.product.locationId!) : const SizedBox.shrink(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(_related.isNotEmpty ? "Related products(${_related.length})" : "",style: Theme.of(context).textTheme.titleMedium?.copyWith(

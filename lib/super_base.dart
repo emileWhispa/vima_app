@@ -52,6 +52,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
 abstract class Superbase<T extends StatefulWidget> extends State<T> {
   String get bigBase => "https://api.vima.rw/zion/";
 
+  String mapKey = "AIzaSyCXOJJDB-5gGJPkMXcy4S6GwOj9mFdprbQ";
+
   String token =
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjcGFpLnRlY2giLCJleHAiOjE2MDEyMTIzODF9.Lw8Acj_ldP4AakcucN3zKM7I1kTEqKTQc70VdfTga827oz1afKP9Gv54veYBVE0a4PEwN7jPt0xqefV_VsIMyg";
 
@@ -99,6 +101,52 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
     if (date == null) return "";
 
     return DateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+  }
+
+
+  Future<String?> showTextEditor(BuildContext context,
+      {String title = "Change phone number",
+        String? value,
+        bool required = true,
+        TextInputFormatter? textInputFormatter,TextInputType? type}) async {
+    var controller = TextEditingController(text: value);
+    var formKey = GlobalKey<FormState>();
+    var ph = await showDialog<String?>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: type,
+                inputFormatters:
+                textInputFormatter != null ? [textInputFormatter] : null,
+                validator: (s) => required && (s == null || s.trim().isEmpty)
+                    ? "Field is required !!"
+                    : null,
+                decoration: InputDecoration(hintText: title),
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context,value);
+                  },
+                  child: const Text("CANCEL")),
+              TextButton(
+                  onPressed: () {
+                    if (formKey.currentState?.validate() ?? false) {
+                      Navigator.pop(context, controller.text);
+                    }
+                  },
+                  child: const Text("Ok"))
+            ],
+          );
+        });
+
+    return ph ?? value;
   }
 
   Future<void> officialSignOut() async {
@@ -410,8 +458,8 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
   Future<G?> push<G>(Widget widget,
       {BuildContext? context,bool replace = false,
       bool replaceAll = false,
-      bool replaceAllExceptOne = false}) async {
-    var pageRoute = CupertinoPageRoute<G>(builder: (context) => widget);
+      bool replaceAllExceptOne = false,fullscreenDialog = false}) async {
+    var pageRoute = CupertinoPageRoute<G>(builder: (context) => widget,fullscreenDialog: fullscreenDialog);
 
     context = context ?? this.context;
     var navigatorState = Navigator.of(context);

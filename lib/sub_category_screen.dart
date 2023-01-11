@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:vima_app/job_item.dart';
 import 'json/category.dart';
+import 'json/job.dart';
 import 'product_details.dart';
 import 'super_base.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,16 @@ class _SubCategoryScreenState extends Superbase<SubCategoryScreen> {
     });
   }
 
+  void loadJobsPerCategory(SubCategory subCategory)async{
+    await ajax(url: "public/jobs/category/${subCategory.id}",server: false,onValue: (s,v){
+      subCategory.loading = false;
+      subCategory.jobs = (s['data'] as Iterable).map((e) => Job.fromJson(e)).toList();
+    });
+    setState(() {
+      subCategory.loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(padding: EdgeInsets.zero,itemCount: widget.category.subs.length,itemBuilder: (context,index){
@@ -50,7 +62,11 @@ class _SubCategoryScreenState extends Superbase<SubCategoryScreen> {
                   item.selected = !prev;
                   if(item.selected){
                     item.loading = true;
-                    loadPerCategory(item);
+                    if(widget.category.job){
+                      loadJobsPerCategory(item);
+                    }else {
+                      loadPerCategory(item);
+                    }
                   }
                 });
               },
@@ -68,47 +84,66 @@ class _SubCategoryScreenState extends Superbase<SubCategoryScreen> {
               height: 180,
               child: item.loading ? const Center(
                 child: CircularProgressIndicator(),
-              )  : item.products.isEmpty ? Center(child: Text("No Products found !",style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              )  : item.products.isEmpty && item.jobs.isEmpty ? Center(child: Text(widget.category.job ? "No Jobs found !" : "No Products found !",style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context)
-                      .textTheme.headlineMedium?.color                    ),)) : ListView.builder(itemCount: item.products.length,scrollDirection: Axis.horizontal,itemBuilder: (context,index){
+                      .textTheme.headlineMedium?.color                    ),)) : widget.category.job ? ListView.builder(itemCount: item.jobs.length,scrollDirection: Axis.horizontal,itemBuilder: (context,index){
+                        var job = item.jobs[index];
+                        return JobItem(job: job);
+              }) : ListView.builder(itemCount: item.products.length,scrollDirection: Axis.horizontal,itemBuilder: (context,index){
                 var pro = item.products[index];
-                return SizedBox(
-                  width: 150,
-                  child: InkWell(
-                    onTap: (){
-                      push(ProductDetails(product: pro));
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xffededed),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          margin: const EdgeInsets.all(10.0),
-                          clipBehavior:Clip.antiAlias,
-                          child: Image(image: CachedNetworkImageProvider(pro.image),fit: BoxFit.cover,frameBuilder: frameBuilder,width: double.infinity,),
-                        )),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10),
-                          child: Text(pro.name,textAlign: TextAlign.start,maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10,left: 10,right: 10),
-                          child: Text("RWF ${fmtNbr(pro.discount)}",textAlign: TextAlign.start,maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                              fontWeight: FontWeight.bold
-                          ),),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return ProductItem(pro: pro);
               }),
             )  : const SizedBox.shrink(),
           ],
         ),
       );
     });
+  }
+}
+
+class ProductItem extends StatefulWidget{
+  final Product pro;
+
+  const ProductItem({super.key, required this.pro});
+
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends Superbase<ProductItem> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: InkWell(
+        onTap: (){
+          push(ProductDetails(product: widget.pro));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xffededed),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: const EdgeInsets.all(10.0),
+              clipBehavior:Clip.antiAlias,
+              child: Image(image: CachedNetworkImageProvider(widget.pro.image),fit: BoxFit.cover,frameBuilder: frameBuilder,width: double.infinity,),
+            )),
+            Padding(
+              padding: const EdgeInsets.only(left: 10,right: 10),
+              child: Text(widget.pro.name,textAlign: TextAlign.start,maxLines: 1,overflow: TextOverflow.ellipsis,),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10,left: 10,right: 10),
+              child: Text("RWF ${fmtNbr(widget.pro.discount)}",textAlign: TextAlign.start,maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
+                  fontWeight: FontWeight.bold
+              ),),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

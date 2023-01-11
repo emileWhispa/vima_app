@@ -26,6 +26,12 @@ class Variant {
     return iterable.map((f)=>VariantValue.fromJson(f)).toList();
   }
 
+  Map<String,dynamic> toJson()=>{
+    "name":name,
+    "valueList":list,
+  };
+
+  Variant(this.name,this.list, {this.id = 0,this.keyValue = false,this.property = false});
 }
 
 
@@ -40,6 +46,13 @@ class VariantValue{
       :name = json['name'],
   id = json['id'],
         description = json['description'];
+
+  Map<String,dynamic> toJson()=>{
+    "name":name,
+    "description":description,
+  };
+
+  VariantValue(this.name,this.description,{this.id = 0});
 }
 
 class VariantPrice{

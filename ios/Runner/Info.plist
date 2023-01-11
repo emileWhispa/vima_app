@@ -69,5 +69,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app need microphone access to allow users to share voice notes in chats</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app need gallery access to share photos and videos in chats and updating profile</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This is used to share music to the chats and others users</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app need gallery access to share photos and videos in chats and updating profile</string>
 </dict>
 </plist>

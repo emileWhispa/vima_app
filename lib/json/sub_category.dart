@@ -1,3 +1,4 @@
+import 'job.dart';
 import 'product.dart';
 
 class SubCategory{
@@ -18,4 +19,5 @@ class SubCategory{
 
 
   List<Product> products = [];
+  List<Job> jobs = [];
 }
