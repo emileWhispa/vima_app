@@ -90,6 +90,7 @@ class _JobApplicationState extends Superbase<JobApplication> {
         "birthDate":_birthDate?.toString()
       }),onValue: (s,v){
         goBack();
+        showSnack(s['message']??"");
       },error: (s,v){
         if(s is Map){
           showSnack(s['message']??"");

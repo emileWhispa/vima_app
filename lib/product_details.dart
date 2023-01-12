@@ -27,7 +27,7 @@ class _ProductDetailsState extends Superbase<ProductDetails>{
 
 
   List<VariantPrice>? prices;
-  List<Variant>? variants;
+  List<Variant> variants = [];
 
   List<Product> _related = [];
 
@@ -197,6 +197,69 @@ class _ProductDetailsState extends Superbase<ProductDetails>{
                 child: Text(widget.product.description??""),
               ),
               widget.product.locationId != null ? MapWidget(locationId: widget.product.locationId!) : const SizedBox.shrink(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: variants.where((element) => element.property).toList().asMap().map((key,e){
+                    var card = e.keyValue ? Card(
+                      margin: const EdgeInsets.only(bottom: 6),child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(e.name,style: Theme.of(context).textTheme.titleLarge,),
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.grey.shade300
+                                    ),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                margin: const EdgeInsets.only(top: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: e.list.asMap().map((key, value) => MapEntry(key, Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        border: key == e.list.length-1 ? null : Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade300
+                                            )
+                                        )
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(child: Text(value.name)),
+                                        Expanded(child: Text(value.description??"",style: const TextStyle(
+                                            fontWeight: FontWeight.bold
+                                        ),)),
+                                      ],
+                                    ),
+                                  ))).values.toList(),
+                                ),
+                              ),
+                            ])),
+                    ) : Card(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(e.name,style: Theme.of(context).textTheme.titleLarge),
+                            Wrap(alignment: WrapAlignment.start,children: e.list.asMap().map((key,ex)=>MapEntry(key, Padding(
+                                padding: const EdgeInsets.only(right: 2),
+                                child: Chip(label: Text(ex.name),),
+                              ))).values.toList(),),
+                          ],
+                        ),
+                      ),
+                    );
+                    return MapEntry(key, card);
+                  }).values.toList(),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(_related.isNotEmpty ? "Related products(${_related.length})" : "",style: Theme.of(context).textTheme.titleMedium?.copyWith(

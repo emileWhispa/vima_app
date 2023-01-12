@@ -29,6 +29,7 @@ class Variant {
   Map<String,dynamic> toJson()=>{
     "name":name,
     "valueList":list,
+    "keyValue":keyValue,
   };
 
   Variant(this.name,this.list, {this.id = 0,this.keyValue = false,this.property = false});

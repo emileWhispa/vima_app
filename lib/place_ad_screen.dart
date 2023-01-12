@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:vima_app/authentication.dart';
 import 'package:vima_app/job_registration.dart';
+import 'package:vima_app/my_jobs_screen.dart';
 import 'package:vima_app/product_registration.dart';
 import 'package:vima_app/super_base.dart';
+
+import 'my_product_screen.dart';
 
 class PlaceAdScreen extends StatefulWidget{
   const PlaceAdScreen({super.key});
@@ -30,9 +33,9 @@ class _PlaceAdScreenState extends Superbase<PlaceAdScreen> with SingleTickerProv
           Tab(text: "Jobs",)
         ]),
       ),
-      body: TabBarView(controller: controller,children: [
-        Center(),
-        Center(),
+      body: TabBarView(controller: controller,children: const [
+        MyProductScreen(),
+        MyJobsScreen(),
       ]),
       floatingActionButton: FloatingActionButton(onPressed: ()async {
         var data = await showDialog<String>(context: context, builder: (context){
@@ -52,9 +55,9 @@ class _PlaceAdScreenState extends Superbase<PlaceAdScreen> with SingleTickerProv
         });
 
         if(data == 'product'){
-          push(const ProductRegistration());
+          push(const ProductRegistration(),fullscreenDialog: true);
         }else if(data == 'job'){
-          push(const JobRegistration());
+          push(const JobRegistration(),fullscreenDialog: true);
         }
       },child: const Icon(Icons.add),),
     );

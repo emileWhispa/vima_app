@@ -22,7 +22,7 @@ class Job {
 
   Job.fromJson(Map<String, dynamic> map)
       : id = map['id'],
-        name = map['name'],
+        name = map['name'] ?? "",
         gender = map['gender'],
         minSalary = map['minSalary'],
         maxSalary = map['maxSalary'],

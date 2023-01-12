@@ -1,4 +1,4 @@
-package com.example.vima_app
+package rw.vima.vima_app
 
 import io.flutter.embedding.android.FlutterActivity
 

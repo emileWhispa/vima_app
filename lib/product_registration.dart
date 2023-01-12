@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:vima_app/json/sub_category.dart';
@@ -21,12 +22,13 @@ class ProductRegistration extends StatefulWidget {
 class _ProductRegistrationState extends Superbase<ProductRegistration> {
   List<Category> _list = [];
 
-  List<Variant> _variants = [];
-  List<Variant> _properties = [];
+  final List<Variant> _variants = [];
+  final List<Variant> _properties = [];
 
   Category? _category;
   SubCategory? _subCategory;
   File? _image;
+  List<File> _images = [];
   DateTime? _expireDate;
 
   bool _saving = false;
@@ -59,6 +61,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
             _subCategory = null;
             _list = (source['data'] as Iterable)
                 .map((e) => Category.fromJson(e))
+            .where((element) => !element.job)
                 .toList();
           });
         });
@@ -77,6 +80,17 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
   }
 
 
+  Future<void> pickImages() async {
+    final ImagePicker picker = ImagePicker();
+    // Pick an image
+    final List<XFile> image = await picker.pickMultiImage();
+
+    setState(() {
+      _images = image.map((e) => File(e.path)).toList();
+    });
+  }
+
+
   void create()async{
 
     if(_key.currentState?.validate()??false) {
@@ -89,6 +103,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
       setState(() {
         _saving = true;
       });
+
       await ajax(url: "user/create/product",
           method: "POST",
           data: FormData.fromMap({
@@ -101,7 +116,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
             "discountPrice":_discountController.text,
             "description":_descriptionController.text,
             "quantity":_quantityController.text,
-            "files":[],
+            "files":_images.map((e) => MultipartFile.fromFileSync(e.path)).toList(),
             "properties":jsonEncode(_properties),
             "variants":jsonEncode(_variants),
             "phone":_phoneController.text,
@@ -110,9 +125,12 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
             "locationId":_locationResult?.placeId,
           }),onValue: (s,v){
             goBack();
+            showSnack(s['message']??"");
           },error: (s,v){
             if(s is Map){
               showSnack(s['message']??"");
+            }else{
+               showSnack("$s");
             }
           });
       setState(() {
@@ -166,9 +184,12 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                       Positioned(
                         bottom: 0,
                         right: 0,
-                        child: Icon(
-                          Icons.add_box_rounded,
-                          color: Theme.of(context).primaryColor,
+                        child: InkWell(
+                          onTap: pickImage,
+                          child: Icon(
+                            Icons.add_box_rounded,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       )
                     ],
@@ -220,6 +241,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: TextFormField(
                     controller: _nameController,
+                    validator: (s)=>s?.trim().isEmpty == true ? "Name is required !!!" : null,
                     decoration: const InputDecoration(labelText: "Product Name"),
                   ),
                 ),
@@ -230,6 +252,9 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                       Expanded(
                           child: TextFormField(
                             controller: _originalController,
+                            validator: (s)=>s?.trim().isEmpty == true ? "Price is required !!!" : null,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            keyboardType: TextInputType.number,
                         decoration: const InputDecoration(labelText: "Price"),
                       )),
                       const SizedBox(
@@ -238,6 +263,9 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                       Expanded(
                           child: TextFormField(
                             controller: _discountController,
+                            validator: (s)=>s?.trim().isEmpty == true ? "Discounted price is required !!!" : null,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        keyboardType: TextInputType.number,
                         decoration:
                             const InputDecoration(labelText: "Discounted Price"),
                       )),
@@ -248,6 +276,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: DropdownButtonFormField<Category>(
                     value: _category,
+                    validator: (s)=>s == null ? "Category is required !!!" : null,
                     onChanged: (v) {
                       setState(() {
                         _subCategory = null;
@@ -270,6 +299,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: DropdownButtonFormField<SubCategory>(
                     value: _subCategory,
+                    validator: (s)=>s == null ? "Sub Category is required !!!" : null,
                     onChanged: (v) {
                       setState(() {
                         _subCategory = v;
@@ -291,8 +321,31 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: TextFormField(
                     controller: _quantityController,
+                    validator: (s)=>s?.trim().isEmpty == true ? "Quantity is required !!!" : null,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                         labelText: "Product Initial Quantity"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: TextFormField(
+                    controller: _emailController,
+                    validator: validateEmail,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                        labelText: "Contact email"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: TextFormField(
+                    controller: _phoneController,
+                    validator: validateMobile,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                        labelText: "Contact email"),
                   ),
                 ),
                 Padding(
@@ -303,6 +356,49 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                     controller: _descriptionController,
                     decoration:
                         const InputDecoration(labelText: "Product Description"),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: FormField<List<File>>(
+                    builder: (field) {
+                      var btn = OutlinedButton.icon(
+                        onPressed: pickImages,
+                        style: OutlinedButton.styleFrom(
+                            side: field.hasError
+                                ? BorderSide(
+                                color: Theme.of(context).colorScheme.error)
+                                : null,
+                            foregroundColor: field.hasError
+                                ? Theme.of(context).colorScheme.error
+                                : null,
+                            padding: const EdgeInsets.all(10)),
+                        label: const Text("Gallery Images for this (max 15)"),
+                        icon: const Icon(Icons.cloud_upload_outlined),
+                      );
+
+                      return field.hasError
+                          ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          btn,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Text(
+                              field.errorText!,
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 11.5),
+                            ),
+                          )
+                        ],
+                      )
+                          : btn;
+                    },
+                    initialValue: _images,
+                    validator: (s) =>
+                    _images.isEmpty ? "At least one gallery image is required !!" : null,
                   ),
                 ),
                 Padding(
@@ -344,7 +440,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                     },
                     initialValue: _locationResult,
                     validator: (s) =>
-                    _locationResult == null ? "C.V Attachment is required !!" : null,
+                    _locationResult == null ? "Location is required !!" : null,
                   ),
                 ),
                 const Text("Product Sku"),
@@ -463,6 +559,202 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                       ),
                     ));
                   }).values.toList(),
+                ),
+
+                const Text("House Property Info"),
+                Row(
+                  children: [
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: OutlinedButton.icon(icon: const Icon(Icons.add),onPressed: (){
+                        setState(() {
+                          _properties.add(Variant("Amenities",[
+                            VariantValue("Cleaning Included", ""),
+                            VariantValue("Free Parking", ""),
+                            VariantValue("Kitchen Appliances", ""),
+                            VariantValue("Recreation Centre", ""),
+                            VariantValue("Sauna", ""),
+                            VariantValue("Swimming Pool", ""),
+                            VariantValue("Washer", ""),
+                            VariantValue("Black", ""),
+                          ],property: true));
+                        });
+                      }, label: const Text("AMENITIES")),
+                    )),
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: OutlinedButton.icon(icon: const Icon(Icons.add),onPressed: (){
+                        setState(() {
+                          _properties.add(Variant("Property Info",[
+                            VariantValue("Room For Rent", "Apartment"),
+                            VariantValue("Room Type", "Private Room"),
+                            VariantValue("Attached Bathroom", "No"),
+                            VariantValue("Balcony", "No"),
+                            VariantValue("Preferred Tenants", "Don't Mind"),
+                          ],keyValue: true,property: true));
+                        });
+                      }, label: const Text("HOUSE INFO")),
+                    )),
+                  ],
+                ),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: _properties.asMap().map((key,e){
+                    var addTap = InkWell(onTap: ()async{
+                      var str = await showTextEditor(context,title: "Add New Sku Value");
+                      if(str != null){
+                        setState(() {
+                          e.list.add(VariantValue(str, ""));
+                        });
+                      }
+                    },child: const Icon(Icons.add));
+                    var card = e.keyValue ? Card(
+                      margin: const EdgeInsets.only(bottom: 6),child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                          SizedBox(
+                          height: 40,
+                          child: TextFormField(initialValue: e.name,onChanged: (s){
+                            setState(() {
+                              e.name = s;
+                            });
+                          },decoration: const InputDecoration(
+                              labelText: "Sku name",
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15)
+                          ),),
+
+                        ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.shade300
+                                ),
+                                borderRadius: BorderRadius.circular(5)
+                              ),
+                              margin: const EdgeInsets.only(top: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: e.list.asMap().map((key, value) => MapEntry(key, Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: key == e.list.length-1 ? null : Border(
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade300
+                                      )
+                                    )
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: Text(value.name)),
+                                      Expanded(child: Text(value.description??"",style: const TextStyle(
+                                        fontWeight: FontWeight.bold
+                                      ),)),
+                                      InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                            e.list.removeAt(key);
+                                          });
+                                        },
+                                        child: const Icon(Icons.delete,color: Colors.red,),
+                                      )
+                                    ],
+                                  ),
+                                ))).values.toList(),
+                              ),
+                            ),
+                            Center(child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: addTap,
+                            )),
+                            Center(child: TextButton.icon(onPressed: (){
+                              setState(() {
+                                _properties.removeAt(key);
+                              });
+                            }, label: const Text("Remove"),icon: const Icon(Icons.delete),style: TextButton.styleFrom(
+                                foregroundColor: Colors.red
+                            ),),)
+                          ])),
+                    ) : Card(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              child: TextFormField(initialValue: e.name,onChanged: (s){
+                                setState(() {
+                                  e.name = s;
+                                });
+                              },decoration: const InputDecoration(
+                                  labelText: "Sku name",
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 15)
+                              ),),
+                            ),
+                            e.list.isEmpty ? Center(child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: addTap,
+                            )) : Wrap(alignment: WrapAlignment.start,children: e.list.asMap().map((key,ex) {
+
+                              Widget entry = Padding(
+                                padding: const EdgeInsets.only(right: 2),
+                                child: Chip(onDeleted: (){
+                                  setState(() {
+                                    e.list.removeAt(key);
+                                  });
+                                },label: Text(ex.name),),
+                              );
+
+                              if(key == e.list.length-1){
+                                entry = Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    entry,
+                                    addTap,
+                                  ],
+                                );
+                              }
+
+                              return MapEntry(key, entry);
+                            }).values.toList(),),
+                            Center(child: TextButton.icon(onPressed: (){
+                              setState(() {
+                                _properties.removeAt(key);
+                              });
+                            }, label: const Text("Remove"),icon: const Icon(Icons.delete),style: TextButton.styleFrom(
+                                foregroundColor: Colors.red
+                            ),),)
+                          ],
+                        ),
+                      ),
+                    );
+                    return MapEntry(key, card);
+                  }).values.toList(),
+                ),
+                const Text("More Property Info"),
+                Row(
+                  children: [
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: OutlinedButton.icon(icon: const Icon(Icons.add),onPressed: (){
+                        setState(() {
+                          _properties.add(Variant("Color",[],property: true));
+                        });
+                      }, label: const Text("PROPERTY")),
+                    )),
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: OutlinedButton.icon(icon: const Icon(Icons.add),onPressed: (){
+                        setState(() {
+                          _variants.add(Variant("Property",[],keyValue: true,property: true));
+                        });
+                      }, label: const Text("KEY & VALUE")),
+                    )),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
