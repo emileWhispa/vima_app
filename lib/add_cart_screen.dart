@@ -7,7 +7,9 @@ import 'package:vima_app/super_base.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 
+import 'json/cart.dart';
 import 'json/product.dart';
+import 'order_detail_screen.dart';
 
 class AddCartScreen extends StatefulWidget{
   final Product product;
@@ -74,9 +76,9 @@ class _AddCartScreenState extends Superbase<AddCartScreen> {
     var desc = variants?.map((e) => e.selected).join("/")??"";
 
     if(widget.buyNow){
-      // await push(OrderDetailScreen(list: [
-      //   Cart(quantity, desc, price, widget.product, 0)
-      // ],buyNow: true,));
+      await push(OrderDetailScreen(list: [
+        Cart(quantity, desc, price, widget.product, 0)
+      ],buyNow: true,));
       return;
     }
 

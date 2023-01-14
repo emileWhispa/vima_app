@@ -63,7 +63,7 @@ class _ChangePasswordScreenState extends Superbase<ChangePasswordScreen> {
                 ),
                 filled: true,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
-                fillColor: Colors.red.shade50
+                fillColor: Colors.blue.shade50
             ),
           ),
           const SizedBox(height: 20,),
@@ -80,7 +80,7 @@ class _ChangePasswordScreenState extends Superbase<ChangePasswordScreen> {
                 ),
                 filled: true,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
-                fillColor: Colors.red.shade50
+                fillColor: Colors.blue.shade50
             ),
           ),
           const SizedBox(height: 20,),
@@ -97,10 +97,10 @@ class _ChangePasswordScreenState extends Superbase<ChangePasswordScreen> {
                 ),
                 filled: true,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
-                fillColor: Colors.red.shade50
+                fillColor: Colors.blue.shade50
             ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 20),
 
           Center(
             child: loading ? const CircularProgressIndicator() : ElevatedButton(style: ButtonStyle(

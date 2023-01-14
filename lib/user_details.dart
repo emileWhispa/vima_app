@@ -223,7 +223,7 @@ class _UserDetailsState extends Superbase<UserDetails> {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.security,color: Colors.red.shade700,),
+                        Icon(Icons.security,color: Colors.blue.shade700,),
                         Expanded(child: Container(decoration: const BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(

@@ -333,7 +333,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                   child: TextFormField(
                     controller: _emailController,
                     validator: validateEmail,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                         labelText: "Contact email"),
                   ),
@@ -344,6 +344,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                     controller: _phoneController,
                     validator: validateMobile,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: const InputDecoration(
                         labelText: "Contact email"),
                   ),
