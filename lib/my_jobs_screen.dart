@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vima_app/job_item.dart';
-import 'package:vima_app/sub_category_screen.dart';
 import 'package:vima_app/super_base.dart';
 
 import 'json/job.dart';
-import 'json/product.dart';
 
 class MyJobsScreen extends StatefulWidget{
   const MyJobsScreen({super.key});

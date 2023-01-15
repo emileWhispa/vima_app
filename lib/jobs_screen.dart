@@ -10,6 +10,6 @@ class JobsScreen extends StatefulWidget{
 class _JobsScreenState extends State<JobsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center();
+    return const Center();
   }
 }

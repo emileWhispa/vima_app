@@ -208,7 +208,13 @@ class _UserDetailsState extends Superbase<UserDetails> {
                     child: Row(
                       children: [
                         Icon(Icons.shopping_cart,color: Colors.blue.shade700,),
-                        Expanded(child: Container(margin: const EdgeInsets.only(left: 12),padding: const EdgeInsets.symmetric(
+                        Expanded(child: Container(margin: const EdgeInsets.only(left: 12),decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: User.user?.providerId == "password" ? Colors.grey.shade300 : Colors.transparent
+                                )
+                            )
+                        ),padding: const EdgeInsets.symmetric(
                             vertical: 12
                         ),child: Text("Shopping Cart",style: Theme.of(context).textTheme.titleMedium,)))
                       ],
