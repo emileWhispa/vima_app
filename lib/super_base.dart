@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:vima_app/json/sub_category.dart';
 import 'json/address.dart';
+import 'json/category.dart';
 import 'json/product.dart';
+import 'json/review.dart';
 import 'json/user.dart';
 import 'json/variant.dart';
 import 'navigation_helper.dart';
@@ -58,6 +61,7 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjcGFpLnRlY2giLCJleHAiOjE2MDEyMTIzODF9.Lw8Acj_ldP4AakcucN3zKM7I1kTEqKTQc70VdfTga827oz1afKP9Gv54veYBVE0a4PEwN7jPt0xqefV_VsIMyg";
 
   String get server => bigBase;
+  String get webServer => "https://vima.rw/";
 
   String userKey = "user-key-val";
 
@@ -75,6 +79,7 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
       Colors.primaries.where((element) => element != Colors.yellow).toList();
 
   String url(String url) => "$server$url";
+  String webUrl(String url) => "$webServer$url";
 
   Future<void> save(String key, dynamic val) {
     return saveVal(key, jsonEncode(val));
@@ -401,6 +406,10 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
               prices,
               variants,
               Extra(
+                canReview: object['data']['canReview'] == true,
+                category: Category.fromJson(object['data']['category']),
+                subCategory: SubCategory.fromJson(object['data']['subCategory']),
+                  reviews: (object['data']['reviews'] as Iterable?)?.map((e) => Review.fromJson(e)).toList(),
                   liked: object['data']['liked'] == true,
                   likesCount: object['data']['likes'] ?? 0,product: Product.fromJson(object['data']['product'])));
         });

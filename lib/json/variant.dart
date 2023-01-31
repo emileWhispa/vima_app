@@ -1,3 +1,5 @@
+import 'package:vima_app/json/review.dart';
+
 import 'category.dart';
 import 'product.dart';
 import 'sub_category.dart';
@@ -80,6 +82,8 @@ class Extra{
   SubCategory? subCategory;
   Product product;
   int likesCount;
+  bool canReview;
+  List<Review>? reviews;
   bool liked;
-  Extra({this.category,this.subCategory,this.liked = false,this.likesCount = 0,required this.product});
+  Extra({this.category,this.subCategory,this.liked = false,this.likesCount = 0,required this.product,this.reviews,this.canReview = false});
 }

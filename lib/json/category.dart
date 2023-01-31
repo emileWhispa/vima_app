@@ -5,6 +5,7 @@ class Category {
   String name;
   String icon;
   bool job = false;
+  bool allowCart = false;
 
   List<SubCategory> subs = [];
 
@@ -13,6 +14,7 @@ class Category {
         icon = map['image'],
         id = map['id'],
         job = map['job'],
+  allowCart = map['allowCart'],
         subs = (map['subCategoryList'] as Iterable?)?.map((e) => SubCategory.fromJson(e)).toList() ?? [];
 
   Category(this.name, this.icon, {this.selected = false});

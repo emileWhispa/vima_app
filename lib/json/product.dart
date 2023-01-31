@@ -11,6 +11,8 @@ class Product {
   double discount;
   String? location;
   String? locationId;
+  String? email;
+  String? phone;
 
   List<Gallery> images = [];
 
@@ -23,6 +25,8 @@ class Product {
         sold = map['sold'] ?? 0,
         quantity = map['quantity'],
         location = map['location'],
+  phone = map['phone'],
+  email = map['email'],
         locationId = map['locationId'],
         description = map['description'],
         discount = (map['discountPrice'] as num).toDouble(),

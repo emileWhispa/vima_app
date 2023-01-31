@@ -123,11 +123,12 @@ class _PaymentModalState extends Superbase<PaymentModal> {
     return _loadingMomo
         ? Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
          Padding(
           padding: const EdgeInsets.all(8.0),
           child:
-          Text("Waiting for momo payment confirmation !",style: Theme.of(context).textTheme.titleLarge,),
+          Text("Waiting for momo payment confirmation !",textAlign: TextAlign.center,style: Theme.of(context).textTheme.titleLarge,),
         ),
         const CircularProgressIndicator(),
       ],
@@ -135,13 +136,13 @@ class _PaymentModalState extends Superbase<PaymentModal> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.check_circle,color: Colors.green,size: 80,),
-        Text("Payment success",style: Theme.of(context).textTheme.titleLarge,)
+        Text("Payment success",textAlign: TextAlign.center,style: Theme.of(context).textTheme.titleLarge,)
       ],
     )  : _failed ? Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.check_circle,color: Colors.red,size: 80,),
-        Text("Payment failed",style: Theme.of(context).textTheme.titleLarge,)
+        Text("Payment failed",textAlign: TextAlign.center,style: Theme.of(context).textTheme.titleLarge,)
       ],
     ) : SingleChildScrollView(
       child: Column(

@@ -80,7 +80,7 @@ class _MyHomePageState extends Superbase<MyHomePage> {
       if(string != null){
         Superbase.tokenValue = (await prefs).getString("token");
           User.user = User.fromJson(jsonDecode(string));
-          push(Homepage(key: NavigationHelper.key,),replaceAll: true);
+          goHome();
       }else{
         setState(() {
           loading = false;
@@ -88,6 +88,10 @@ class _MyHomePageState extends Superbase<MyHomePage> {
       }
     });
     super.initState();
+  }
+
+  void goHome(){
+    push(Homepage(key: NavigationHelper.key,),replaceAll: true);
   }
 
   @override
@@ -149,7 +153,7 @@ class _MyHomePageState extends Superbase<MyHomePage> {
             child: Padding(
               padding: const EdgeInsets.only(top: 20),
               child: TextButton(onPressed: () {
-                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>const Authentication()));
+                Navigator.push(context, CupertinoPageRoute(builder: (context)=> Authentication(loginSuccessCallback: goHome,)));
               },style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
                 foregroundColor: const Color(0xff3287C2),
