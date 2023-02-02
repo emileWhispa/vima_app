@@ -69,7 +69,7 @@ class _JobDetailsScreenState extends Superbase<JobDetailsScreen> {
             ],
           ),
         ),
-        Padding(
+        widget.job.minSalary > 0 && widget.job.maxSalary > 0 ? Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Row(
             children: [
@@ -80,7 +80,7 @@ class _JobDetailsScreenState extends Superbase<JobDetailsScreen> {
               ),)),
             ],
           ),
-        ),
+        ) : const SizedBox.shrink(),
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Row(

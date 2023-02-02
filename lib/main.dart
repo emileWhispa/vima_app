@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vima_app/authentication.dart';
 import 'package:vima_app/my_home_page.dart';
+import 'package:vima_app/product_details.dart';
 import 'package:vima_app/super_base.dart';
 
 import 'json/user.dart';
+import 'life_cycle.dart';
 import 'navigation_helper.dart';
 
 void main() {
@@ -87,11 +89,38 @@ class _MyHomePageState extends Superbase<MyHomePage> {
         });
       }
     });
+    WidgetsBinding.instance
+        .addObserver(LifecycleEventHandler(resumeCallBack: () {
+      getSharedText();
+
+      return Future.value();
+    }));
     super.initState();
   }
 
   void goHome(){
     push(Homepage(key: NavigationHelper.key,),replaceAll: true);
+  }
+
+  void getSharedText()async{
+
+    try{
+      var deep = await platform.invokeMethod("deep-link");
+
+      var done = false;
+      if(deep != null){
+        var uri = Uri.parse(deep);
+        showMd();
+        getDetails(int.parse(uri.pathSegments.last),error: closeMd,callback: (prices,values,extra){
+          if(!done) {
+            done = true;
+            push(ProductDetails(product: extra.product), replace: true);
+          }
+        });
+      }
+    }catch(_){
+
+    }
   }
 
   @override

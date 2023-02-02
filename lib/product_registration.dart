@@ -483,7 +483,7 @@ class _ProductRegistrationState extends Superbase<ProductRegistration> {
                       padding: const EdgeInsets.only(right: 0),
                       child: OutlinedButton.icon(icon: const Icon(Icons.add),onPressed: ()async{
 
-                        var str = await showTextEditor(context,title: "Add New SkuVar");
+                        var str = await showTextEditor(context,title: "Add New Sku Var");
                         if(str != null){
                           setState(() {
                             _variants.add(Variant(str, []));

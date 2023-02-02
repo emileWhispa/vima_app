@@ -214,7 +214,7 @@ class _JobRegistrationState extends Superbase<JobRegistration> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: TextFormField(
-                        validator: (s)=>s?.trim().isEmpty == true ? "Salary(Min) is required !!" : null,
+                        // validator: (s)=>s?.trim().isEmpty == true ? "Salary(Min) is required !!" : null,
                         controller: _salaryMinController,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         keyboardType: TextInputType.number,
@@ -226,7 +226,7 @@ class _JobRegistrationState extends Superbase<JobRegistration> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: TextFormField(
-                        validator: (s)=>s?.trim().isEmpty == true ? "Salary(Max) is required !!" : null,
+                        // validator: (s)=>s?.trim().isEmpty == true ? "Salary(Max) is required !!" : null,
                         controller: _salaryMaxController,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         keyboardType: TextInputType.number,
@@ -444,14 +444,14 @@ class _JobRegistrationState extends Superbase<JobRegistration> {
                     decoration: const InputDecoration(labelText: "Company name"),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: TextFormField(
-                    validator: (s)=>s?.trim().isEmpty == true ? "Company type is required !!" : null,
-                    controller: _companyTypeController,
-                    decoration: const InputDecoration(labelText: "Company type"),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 10),
+                //   child: TextFormField(
+                //     validator: (s)=>s?.trim().isEmpty == true ? "Company type is required !!" : null,
+                //     controller: _companyTypeController,
+                //     decoration: const InputDecoration(labelText: "Company type"),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: TextFormField(
