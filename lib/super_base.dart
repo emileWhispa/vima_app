@@ -160,7 +160,7 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
     (await prefs).clear();
     setState(() {
     });
-    NavigationHelper.key.currentState?.refresh(null);
+    NavigationHelper.key.currentState?.refreshUser(null);
     return Future.value();
   }
 

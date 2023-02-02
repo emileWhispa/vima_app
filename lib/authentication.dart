@@ -87,7 +87,7 @@ class _AuthenticationState extends Superbase<Authentication> {
       saveVal("token", object['data']['token']);
       Superbase.tokenValue = object['data']['token'];
       widget.loginSuccessCallback?.call();
-      NavigationHelper.key.currentState?.refresh(user);
+      NavigationHelper.key.currentState?.refreshUser(user);
     },error: (s,v){
 
     });

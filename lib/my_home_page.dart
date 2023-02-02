@@ -4,7 +4,11 @@ import 'package:vima_app/cart_screen.dart';
 import 'package:vima_app/home_screen.dart';
 import 'package:vima_app/json/user.dart';
 import 'package:vima_app/place_ad_screen.dart';
+import 'package:vima_app/product_details.dart';
+import 'package:vima_app/super_base.dart';
 import 'package:vima_app/wish_list_screen.dart';
+
+import 'life_cycle.dart';
 
 class Homepage extends StatefulWidget{
   const Homepage({super.key});
@@ -13,18 +17,58 @@ class Homepage extends StatefulWidget{
   State<Homepage> createState() => HomepageState();
 }
 
-class HomepageState extends State<Homepage> {
+class HomepageState extends Superbase<Homepage> {
+  LifecycleEventHandler? eventHandler;
 
   void goToLogin(){
 
   }
 
-  void refresh(User? user){
+  void refreshUser(User? user){
     setState(() {
       User.user = user;
     });
   }
 
+  @override
+  void initState() {
+    eventHandler = LifecycleEventHandler(resumeCallBack: () {
+      getSharedText();
+
+      return Future.value();
+    });
+    WidgetsBinding.instance
+        .addObserver(eventHandler!);
+    super.initState();
+
+  }
+
+
+  void getSharedText()async{
+
+    try{
+      var deep = await platform.invokeMethod("deep-link");
+
+      var done = false;
+      if(deep != null){
+        var uri = Uri.parse(deep);
+        showMd();
+        getDetails(int.parse(uri.pathSegments.last),error: closeMd,callback: (prices,values,extra){
+          if(!done) {
+            done = true;
+            push(ProductDetails(product: extra.product), replace: true);
+          }
+        });
+      }
+    }catch(_){
+
+    }
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(eventHandler!);
+    super.dispose();
+  }
 
   int _index = 0;
 

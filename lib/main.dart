@@ -74,6 +74,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends Superbase<MyHomePage> {
 
   bool loading = true;
+  LifecycleEventHandler? eventHandler;
 
   @override
   void initState() {
@@ -89,13 +90,22 @@ class _MyHomePageState extends Superbase<MyHomePage> {
         });
       }
     });
-    WidgetsBinding.instance
-        .addObserver(LifecycleEventHandler(resumeCallBack: () {
+
+    eventHandler = LifecycleEventHandler(resumeCallBack: () {
       getSharedText();
 
       return Future.value();
-    }));
+    });
+
+    WidgetsBinding.instance
+        .addObserver(eventHandler!);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(eventHandler!);
+    super.dispose();
   }
 
   void goHome(){
